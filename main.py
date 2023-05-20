@@ -6,6 +6,9 @@ import urllib.request
 import urllib.parse
 import json
 
+# Freezer temperature threshold
+freezeThresh = -12
+
 # Email Settings
 recipients = ["ocallaje@tcd.ie", "jeffreyocallaghan@hotmail.com"]
 subject = "Freezer Alert!"
@@ -59,19 +62,17 @@ while True:
         else:
             print(content)
     
+        #debug
+        print type(content)
 
-        
+        if content > freezeThresh:
+            # Send SMS
+            resp =  sendSMS('MzE3NzU0NTY1MDY0MzM3Nzc5NmY2OTY2NTE2NDMyNjg=', smsreceivers,'Lab Notifier', body)
+            response = json.loads(resp)
+            print (response['cost'])
+
+            # Send Email
+            send_email(subject, body, sender, recipients, password)
+
     print("Closing connection")
     client.close()
-    
-
-
-
-
-# Send SMS
-resp =  sendSMS('MzE3NzU0NTY1MDY0MzM3Nzc5NmY2OTY2NTE2NDMyNjg=', smsreceivers,'Lab Notifier', body)
-response = json.loads(resp)
-print (response['cost'])
-
-# Send Email
-send_email(subject, body, sender, recipients, password)
