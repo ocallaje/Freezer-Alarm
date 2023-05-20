@@ -16,16 +16,40 @@ const char* host = "192.168.4.1";
 #pragma message(THIS EXAMPLE IS FOR ESP32 ONLY!)
 #error Select ESP32 board.
 #endif
+DHTesp dht;
+void tempTask(void *pvParameters);
+bool getTemperature();
+void triggerGetTemp();
 
-#line 18 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\Freezer-Alarm.ino"
+/** Task handle for the light value read task */
+TaskHandle_t tempTaskHandle = NULL;
+/** Ticker for temperature reading */
+Ticker tempTicker;
+/** Comfort profile */
+ComfortState cf;
+/** Flag if task should run */
+bool tasksEnabled = false;
+/** Pin number for DHT11 data pin */
+int dhtPin = 17;
+
+
+
+
+
+#line 37 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void setup();
-#line 33 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 59 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void loop();
-#line 18 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 37 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void setup()
 {
+  // Begin Serial
   Serial.begin(115200);
+  Serial.println();
+  Serial.println("DHT ESP32 example with tasks");
+  initTemp();
 
+  // Begin Network Connection
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -35,6 +59,8 @@ void setup()
   Serial.print("WiFi connected with IP: ");
   Serial.println(WiFi.localIP());
 
+ // Signal end of setup() to tasks
+  tasksEnabled = true;
 }
 
 void loop()
@@ -53,6 +79,15 @@ void loop()
     Serial.println("Connected to server successful!");
     // Send to client
     client.print("Hello from ESP32!");
+
+    if (!tasksEnabled) {
+      delay(2000)
+      tasksEnabled = true;
+      if (tempTaskHandle !=NULL) {
+        vTaskResume(tempTaskHandle);
+      }
+    }
+    yield();
 
     Serial.println("Disconnecting...");
     client.stop();
