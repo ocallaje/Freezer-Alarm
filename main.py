@@ -63,7 +63,7 @@ while True:
             print(content)
     
         #debug
-        print type(content)
+        print("The variable, content is of type:", type(content))
 
         if content > freezeThresh:
             # Send SMS
