@@ -5,19 +5,24 @@ from email.mime.text import MIMEText
 import urllib.request
 import urllib.parse
 import json
+import os
+from dotenv import load_dotenv
 
 # Freezer temperature threshold
 freezeThresh = -12
 
 # Email Settings
-recipients = ["ocallaje@tcd.ie", "jeffreyocallaghan@hotmail.com"]
+recipients = os.getenv('email_recipients')
+sender = os.getenv('smtp_sender')
+password = os.getenv('smtp_pass')
+smtp_user = os.getenv('smtp_user')
+smtp_host = os.getenv('smtp_host')
 subject = "Freezer Alert!"
 body = "Freezer not be chill yo"
-sender = "ClusterNotifier@spice.rack"
-password = "Claudin5"
 
 # SMS settings
-smsreceivers = ['0863612897']   # comma delimited character list of phone numbers
+smsreceivers = os.getenv('phonenums')  # comma delimited character list of phone numbers
+sms_api = os.getenv('sms_api')
 
 # Email function 
 def send_email(subject, body, sender, recipients, password):
@@ -26,12 +31,12 @@ def send_email(subject, body, sender, recipients, password):
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
     #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    smtp_server = smtplib.SMTP('192.168.5.2', 587)
+    smtp_server = smtplib.SMTP(smtp_host, 587)
     smtp_server.ehlo()
     smtp_server.starttls()
     smtp_server.ehlo()
 
-    smtp_server.login('Cluster_Notifier', password)
+    smtp_server.login(smtp_user, password)
     smtp_server.sendmail(sender, recipients, msg.as_string())
     smtp_server.quit()
 
@@ -67,7 +72,7 @@ while True:
 
         if content > freezeThresh:
             # Send SMS
-            resp =  sendSMS('MzE3NzU0NTY1MDY0MzM3Nzc5NmY2OTY2NTE2NDMyNjg=', smsreceivers,'Lab Notifier', body)
+            resp =  sendSMS(sms_api, smsreceivers,'Lab Notifier', body)
             response = json.loads(resp)
             print (response['cost'])
 

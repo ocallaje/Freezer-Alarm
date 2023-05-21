@@ -1,4 +1,4 @@
-#line 1 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\.vscode\\c_cpp_properties.json"
+#line 1 "D:\\Projects\\Github\\Freezer-Alarm\\.vscode\\c_cpp_properties.json"
 {
     "version": 4,
     "configurations": [
@@ -183,7 +183,6 @@
                 "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Ticker\\src",
                 "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\DallasTemperature",
                 "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\OneWire",
-                "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\DHT_sensor_library_for_ESPx",
                 "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src",
                 "c:\\users\\jeffr\\appdata\\local\\arduino15\\packages\\dfrobot\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2020r3\\xtensa-esp32-elf\\include\\c++\\8.4.0",
                 "c:\\users\\jeffr\\appdata\\local\\arduino15\\packages\\dfrobot\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2020r3\\xtensa-esp32-elf\\include\\c++\\8.4.0\\xtensa-esp32-elf",
