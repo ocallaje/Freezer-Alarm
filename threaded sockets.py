@@ -1,7 +1,6 @@
 import socket
 from threading import Thread
 import smtplib
-import ssl
 from email.mime.text import MIMEText
 import urllib.request
 import urllib.parse
@@ -13,6 +12,7 @@ import time
 # Freezer temperature threshold
 freezeThresh = -12
 
+load_dotenv('config.env')
 # Email Settings
 recipients = os.getenv('email_recipients')
 sender = os.getenv('smtp_sender')
@@ -37,7 +37,6 @@ def send_email(subject, body, sender, recipients, password):
     smtp_server.ehlo()
     smtp_server.starttls()
     smtp_server.ehlo()
-
     smtp_server.login(smtp_user, password)
     smtp_server.sendmail(sender, recipients, msg.as_string())
     smtp_server.quit()
@@ -77,6 +76,7 @@ def on_new_client(client_socket, addr):
 s = socket.socket()         # create socket object
 s.bind(('0.0.0.0', 8090))   # allow any incoming connection on port 8090
 s.listen(5)                 # increase number for more clients
+print(recipients)
 print('Waiting for connection...')
 
 while True:
