@@ -1,7 +1,5 @@
 #include <Arduino.h>
 #line 1 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
-#include <OneWire.h>
-
 #include <Ticker.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
@@ -24,11 +22,11 @@ OneWire oneWire(oneWireBus);  // setup oneWire
 DallasTemperature sensors(&oneWire); //pass oneWire reference to temp sensor
 
 
-#line 25 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 23 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void setup();
-#line 42 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 40 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void loop();
-#line 25 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 23 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void setup()
 {
   // Begin Serial

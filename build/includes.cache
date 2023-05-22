@@ -11,11 +11,6 @@
   },
   {
     "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\Freezer-Alarm.ino.cpp",
-    "Include": "OneWire.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire"
-  },
-  {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\Freezer-Alarm.ino.cpp",
     "Include": "Ticker.h",
     "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Ticker\\src"
   },
@@ -23,6 +18,11 @@
     "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\Freezer-Alarm.ino.cpp",
     "Include": "DallasTemperature.h",
     "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\DallasTemperature"
+  },
+  {
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\Freezer-Alarm.ino.cpp",
+    "Include": "OneWire.h",
+    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire"
   },
   {
     "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\Freezer-Alarm.ino.cpp",
@@ -35,17 +35,17 @@
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire\\OneWire.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
     "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Ticker\\src\\Ticker.cpp",
     "Include": "",
     "Includepath": null
   },
   {
     "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\DallasTemperature\\DallasTemperature.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire\\OneWire.cpp",
     "Include": "",
     "Includepath": null
   },

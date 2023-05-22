@@ -7,6 +7,7 @@ import urllib.parse
 import json
 import os
 from dotenv import load_dotenv
+import time
 
 # Freezer temperature threshold
 freezeThresh = -12
@@ -78,6 +79,8 @@ while True:
 
             # Send Email
             send_email(subject, body, sender, recipients, password)
+
+            time.sleep(3600)  # wait an hour before resetting
 
     print("Closing connection")
     client.close()
