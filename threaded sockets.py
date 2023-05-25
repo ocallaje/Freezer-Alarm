@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 import time
 
 # Freezer temperature threshold
-freezeThresh = -12
+freezeThresh = -130
 
 load_dotenv('config.env')
 # Email Settings
@@ -53,24 +53,33 @@ def sendSMS(apikey, numbers, sender, message):
 
 # Get freezer data
 def on_new_client(client_socket, addr):
-    while True:
-        data = client_socket.recv(1024).decode('utf-8')
-        if not data:
-            break
-        print(f"{addr} >> {data}")
-        print("The variable, content is of type:", type(data))
+    MSG_LEN = 7
+    bytes_recd = 0
+    chunks = []
+    while bytes_recd < MSG_LEN:
+        chunk = client.recv(min(MSG_LEN - bytes_recd, 2048))
+        if not chunk:
+            raise RuntimeError("ERROR")
+        chunks.append(chunk)
+        bytes_recd += len(chunk)
+        data = b"".join(chunks)   
+        message = data.decode("utf-8").strip()
+        print("Received message: ", message)
 
-        # process data to extract freezer name and temp, maybe with special delimiter
-
-        if data > freezeThresh:
-            # Send SMS
-            resp =  sendSMS(sms_api, smsreceivers,'Lab Notifier', body)
-            response = json.loads(resp)
-            print (response['cost'])
-            # Send Email
-            send_email(subject, body, sender, recipients, password)
-            time.sleep(3600)  # wait an hour before resetting
+    # Do something with message
+    temp = float(message)
+    if temp > freezeThresh:
+        print("temp is high")
+         # Send SMS
+        resp =  sendSMS(sms_api, smsreceivers,'Lab Notifier', body)
+        response = json.loads(resp)
+        print (response['cost'])
+        # Send Email
+        send_email(subject, body, sender, recipients, password)
+        time.sleep(3600)  # wait an hour before resetting #proabbyl wont work because of main loop
+    # Close connection and socket
     client_socket.close()
+
 
 # Start scoket
 s = socket.socket()         # create socket object
@@ -84,6 +93,7 @@ while True:
     print(f"New connection from: {addr}")
     thread = Thread(target=on_new_client, args = (client, addr)) # create thread
     thread.start() # start thread
+    time.sleep(10)
     # close client connection
     print("Closing connection")
     client.close()

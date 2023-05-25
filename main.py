@@ -54,20 +54,23 @@ def sendSMS(apikey, numbers, sender, message):
 
 # Start scoket
 s = socket.socket()
-s.bind(('192.168.4.1', 8090)) 
+s.bind(('0.0.0.0', 8090)) 
 s.listen(0) # increase number for more clients
 
 while True:
     client, addr = s.accept() # receive a connection
 
     while True:
-        content = client.recv(32) #receive 32 bytes of data
+        content = client.recv(1000) #receive 32 bytes of data
 
         if len(content) == 0: # 0 if client disconnects
             break
         else:
-            print(content)
-    
+            print("content is : ")
+            print(content)           
+            int_val = int.from_bytes(content, "big") # convert byte to int
+            print(int_val)
+
         #debug
         print("The variable, content is of type:", type(content))
 
