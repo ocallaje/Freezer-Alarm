@@ -9,8 +9,8 @@ import os
 from dotenv import load_dotenv
 import time
 
-# Freezer temperature threshold
-freezeThresh = -130
+freezeThresh = -130     # Freezer temperature threshold
+global trigger          # Variable accessible by thread functions
 
 load_dotenv('config.env')
 # Email Settings
@@ -58,8 +58,8 @@ def on_new_client(client_socket, addr):
     chunks = []
     while bytes_recd < MSG_LEN:
         chunk = client.recv(min(MSG_LEN - bytes_recd, 2048))
-        if not chunk:
-            raise RuntimeError("ERROR")
+        if not chunk:       
+          break         # Break out of while loop when no more chunks
         chunks.append(chunk)
         bytes_recd += len(chunk)
         data = b"".join(chunks)   
@@ -70,16 +70,17 @@ def on_new_client(client_socket, addr):
     temp = float(message)
     if temp > freezeThresh:
         print("temp is high")
-         # Send SMS
+        global trigger 
+        trigger = 1     # To identify a trigger event
+        # Send SMS
         resp =  sendSMS(sms_api, smsreceivers,'Lab Notifier', body)
         response = json.loads(resp)
-        print (response['cost'])
+        print(response['cost'])
         # Send Email
         send_email(subject, body, sender, recipients, password)
-        time.sleep(3600)  # wait an hour before resetting #proabbyl wont work because of main loop
+        print("send email")
     # Close connection and socket
     client_socket.close()
-
 
 # Start scoket
 s = socket.socket()         # create socket object
@@ -88,13 +89,18 @@ s.listen(5)                 # increase number for more clients
 print(recipients)
 print('Waiting for connection...')
 
+trigger = 0                 # initialise trigger variable
 while True:
     client, addr = s.accept() # receive a connection
     print(f"New connection from: {addr}")
     thread = Thread(target=on_new_client, args = (client, addr)) # create thread
-    thread.start() # start thread
+    thread.start()          # start thread
     time.sleep(10)
     # close client connection
+    if trigger == 1:
+      print("alarm on. waiting to restart")
+      time.sleep(7200)      # wait 2 hours before resetting
+    trigger = 0
     print("Closing connection")
     client.close()
     thread.join
