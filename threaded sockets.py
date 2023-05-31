@@ -9,7 +9,7 @@ import os
 from dotenv import load_dotenv
 import time
 
-freezeThresh = -130     # Freezer temperature threshold
+freezeThresh = -14     # Freezer temperature threshold
 global trigger          # Variable accessible by thread functions
 
 load_dotenv('config.env')
@@ -20,7 +20,7 @@ password = os.getenv('smtp_pass')
 smtp_user = os.getenv('smtp_user')
 smtp_host = os.getenv('smtp_host')
 subject = "Freezer Alert!"
-body = "Freezer not be chill yo"
+body = "Lab Freezer Alert! Temperature of freezer has exceeded " + freezeThresh + "degrees! Please investigate"
 
 # SMS settings
 smsreceivers = os.getenv('phonenums')  # comma delimited character list of phone numbers
