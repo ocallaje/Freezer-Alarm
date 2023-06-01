@@ -9,3 +9,6 @@ Textlocal requires than an account be pre-credited to send messages. Test messag
 
 ### Email
 Emails are sent using SMTP to a local SMTP server using TLS. Settings can be changed for public SMTP servers e.g. GMAIL. 
+
+## WiFi Connection
+The ESP32 connects over WiFi with a websocket to communicate with a PC/Server running the python script to process the data.
