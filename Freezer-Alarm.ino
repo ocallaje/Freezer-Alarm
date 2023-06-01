@@ -4,8 +4,8 @@
 #include <WiFi.h>
 
 // Network parameters
-const char* ssid = "SpringdaleSpringadome";
-const char* password = "Springadome64";
+const char* ssid = "";
+const char* password = "";
 const uint16_t port = 8090;
 const char* host = "192.168.1.27";
 IPAddress local_IP(192, 168, 1, 240);
