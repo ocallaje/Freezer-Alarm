@@ -27,10 +27,12 @@ sms_api = '='                       # textlocal api key
 
 The second environment file called WiFiCredentials.h is located in your arduino/esp32 libraries folder like so:
 
+```bash
 ├── Arduino
 │   ├── Libraries
 │   │   ├── WiFiCredentials
 │   │   │   ├──WifiCredentials.h
+```
 
 This file defines the wifi to connect to for the esp32 and should contain the following with your wifi details within the ""
 #define envSSID ""
