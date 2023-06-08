@@ -12,3 +12,26 @@ Emails are sent using SMTP to a local SMTP server using TLS. Settings can be cha
 
 ## WiFi Connection
 The ESP32 connects over WiFi with a websocket to communicate with a PC/Server running the python script to process the data.
+
+## Environment Files
+You will need two environment files. One called config.env located in the root directory containing the following parameters (insert strings between each '' or ""):
+
+phonenums = ['']                    # phone numbers e.g. ['012345678']
+email_recipients = ["", ""]         # comma delimited list of email addresses
+smtp_user = ''                      # smtp server username
+smtp_pass = ""                      # smtp server password
+smtp_sender = ""                    # email addres of smtp account       
+smtp_host = ''                      # smtp server ip address
+sms_api = '='                       # textlocal api key
+
+
+The second environment file called WiFiCredentials.h is located in your arduino/esp32 libraries folder like so:
+
+├── Arduino
+│   ├── Libraries
+│   │   ├── WiFiCredentials
+│   │   │   ├──WifiCredentials.h
+
+This file defines the wifi to connect to for the esp32 and should contain the following with your wifi details within the ""
+#define envSSID ""
+#define envPASSWORD ""
