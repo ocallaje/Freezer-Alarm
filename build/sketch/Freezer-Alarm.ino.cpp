@@ -4,12 +4,13 @@
 #include <DallasTemperature.h>
 #include <OneWire.h>
 #include <WiFi.h>
+#include "WiFICredentials.h"
 
 // Network parameters
-const char* ssid = "SpringdaleSpringadome";
-const char* password = "Springadome64";
+const char* ssid = envSSID;
+const char* password = envPASSWORD;
 const uint16_t port = 8090;
-const char* host = "192.168.1.27";
+const char* host = "192.168.4.1";
 IPAddress local_IP(192, 168, 1, 240);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 0, 0);
@@ -27,11 +28,11 @@ OneWire oneWire(oneWireBus);  // setup oneWire
 DallasTemperature sensors(&oneWire); //pass oneWire reference to temp sensor
 
 
-#line 28 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 29 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void setup();
-#line 48 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 49 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void loop();
-#line 28 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
+#line 29 "D:\\Projects\\Github\\Freezer-Alarm\\Freezer-Alarm.ino"
 void setup()
 {
   // Begin Serial

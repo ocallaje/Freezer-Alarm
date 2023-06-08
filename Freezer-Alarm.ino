@@ -2,14 +2,15 @@
 #include <DallasTemperature.h>
 #include <OneWire.h>
 #include <WiFi.h>
+#include "WiFICredentials.h"
 
 // Network parameters
-const char* ssid = "";
-const char* password = "";
+const char* ssid = envSSID;
+const char* password = envPASSWORD;
 const uint16_t port = 8090;
-const char* host = "192.168.1.27";
-IPAddress local_IP(192, 168, 1, 240);
-IPAddress gateway(192, 168, 1, 1);
+const char* host = "192.168.4.1";
+IPAddress local_IP(192, 168, 4, 2);
+IPAddress gateway(192, 168, 4, 1);
 IPAddress subnet(255, 255, 0, 0);
 IPAddress primaryDNS(8, 8, 8, 8); //optional
 IPAddress secondaryDNS(8, 8, 4, 4); //optional

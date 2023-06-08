@@ -1,7 +1,7 @@
 # Prerequisites
 *.d
 *.env
-
+WiFiCredentials.h
 # Object files
 *.o
 *.ko
