@@ -1,8 +1,0 @@
-#line 1 "D:\\Projects\\Github\\Freezer-Alarm\\.vscode\\arduino.json"
-{
-    "configuration": "PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,LoopCore=1,EventsCore=1,DebugLevel=none",
-    "board": "DFRobot:esp32:esp32",
-    "sketch": "Freezer-Alarm.ino",
-    "output": "build",
-    "port": "COM4"
-}

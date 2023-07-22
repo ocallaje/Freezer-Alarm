@@ -1,25 +1,24 @@
-# 1 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
 //************************************************************
 // This device uses a mesh to communicate freezer sensor data 
 // to a central node. Up to 4 DS18B20 probes can be connected. 
 // Device will monitor sensor status and send all data to root
 // node with a JSON document.
 //************************************************************
-# 8 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino" 2
-# 9 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino" 2
-# 10 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino" 2
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#include <painlessMesh.h>
 
+#define   MESH_PREFIX     "LabIOTMesh"
+#define   MESH_PASSWORD   "sayyeshtothemesh"
+#define   MESH_PORT       5555
 
-
-
-
-Scheduler userScheduler; // to control your personal task
-painlessMesh mesh;
+Scheduler     userScheduler;                // to control your personal task
+painlessMesh  mesh;
 
 // Temp Sensors
-
-OneWire oneWire(2 /* Data wire is plugged into digital pin 2 on the Arduino*/); // Setup a oneWire instance to 
-DallasTemperature sensors(&oneWire); // Pass oneWire reference to DallasTemperature library
+#define ONE_WIRE_BUS 2                      // Data wire is plugged into digital pin 2 on the Arduino
+OneWire oneWire(ONE_WIRE_BUS);	            // Setup a oneWire instance to 
+DallasTemperature sensors(&oneWire);        // Pass oneWire reference to DallasTemperature library
 
 // Temp sensor vars
 const int numSensors = 4;
@@ -30,13 +29,13 @@ int connectedSensor[numSensors] = {0,0,0,0};
 
 // Prototype
 void receivedCallback( uint32_t from, String &msg );
-size_t logServerId = 0; // init server id
+size_t logServerId = 0;                     // init server id
 
 // Send message to the logServer every 10 seconds 
-Task myLoggingTask(10000, (-1), []() {
+Task myLoggingTask(10000, TASK_FOREVER, []() {
   DynamicJsonDocument jsonBuffer(1024);
   JsonArray sensorArray = jsonBuffer.createNestedArray("sensorArray");
-  for (int i = 0; i < numSensors; i++){
+  for (int i = 0;  i < numSensors;  i++){
     JsonObject msg = sensorArray.createNestedObject();
     msg["index"] = i;
     msg["FreezerID"] = "F"+String(i+1);
@@ -55,38 +54,38 @@ Task myLoggingTask(10000, (-1), []() {
 
   String str;
   serializeJson(jsonBuffer, str);
-  if (logServerId == 0) // If we don't know the logServer yet
+  if (logServerId == 0)                     // If we don't know the logServer yet
     mesh.sendBroadcast(str);
   else
     mesh.sendSingle(logServerId, str);
-  serializeJson(jsonBuffer, Serial); // Log to serial
+  serializeJson(jsonBuffer, Serial);        // Log to serial
   Serial.printf("\n");
   Serial.println("");
 });
 
 // Task to read temp sensors
-Task readTemps(1000, (-1), []() {
-  sensors.requestTemperatures(); // Get all temps
-  for (int i = 0; i < numSensors; i++){
-    tempC = sensors.getTempCByIndex(i); // Temp of ith sensor
-    tempSensors[i] = tempC; // Store temp reading
+Task readTemps(1000, TASK_FOREVER, []() {
+  sensors.requestTemperatures();            // Get all temps
+  for (int i = 0;  i < numSensors;  i++){
+    tempC = sensors.getTempCByIndex(i);     // Temp of ith sensor
+    tempSensors[i] = tempC;                 // Store temp reading
     //Serial.println(tempSensors[i]);
     if (tempC != -127) {
-      connectedSensor[i] = 1; // Sensor is connected
+      connectedSensor[i] = 1;               // Sensor is connected
       } else {
-      connectedSensor[i] = 0; // Sensor is disconnected
+      connectedSensor[i] = 0;               // Sensor is disconnected
     }
   }
 });
 
 void setup() {
   Serial.begin(115200);
-  sensors.begin(); // Start temp sensors
-  deviceCount = sensors.getDeviceCount(); // locate devices on the bus
+  sensors.begin();                          // Start temp sensors
+  deviceCount = sensors.getDeviceCount();   // locate devices on the bus
 
   // Start mesh
-  mesh.setDebugMsgTypes( ERROR | STARTUP | CONNECTION ); // set before init() to see start msgs
-  mesh.init( "LabIOTMesh", "sayyeshtothemesh", &userScheduler, 5555, WIFI_MODE_APSTA, 6 );
+  mesh.setDebugMsgTypes( ERROR | STARTUP | CONNECTION );  // set before init() to see start msgs
+  mesh.init( MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT, WIFI_AP_STA, 6 );
   mesh.onReceive(&receivedCallback);
 
   // Add the task to the your scheduler
@@ -97,7 +96,7 @@ void setup() {
 }
 
 void loop() {
-  mesh.update(); // Renew mesh and tasks
+  mesh.update();                            // Renew mesh and tasks
 }
 
 void receivedCallback( uint32_t from, String &msg ) {
@@ -110,7 +109,7 @@ void receivedCallback( uint32_t from, String &msg ) {
     Serial.printf("DeserializationError\n");
     return;
   }
-
+  
   JsonObject root = jsonBuffer.as<JsonObject>();
   if (root.containsKey("topic")) {
       if (String("logServer").equals(root["topic"].as<String>())) {

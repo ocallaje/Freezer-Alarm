@@ -1,0 +1,18 @@
+
+search all json levels for nodeid
+if exist nodeid
+overwrite that level
+
+else
+  append json object
+
+
+
+onDisconnect
+search all json levels for nodeid
+remove that level
+
+
+onConnect
+nothing?
+
