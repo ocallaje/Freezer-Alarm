@@ -10,67 +10,57 @@
     "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\variants\\firebeetle32"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
-    "Include": "OneWire.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire"
-  },
-  {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
-    "Include": "DallasTemperature.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\DallasTemperature"
-  },
-  {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "painlessMesh.h",
     "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\painlessMesh\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "TaskSchedulerDeclarations.h",
     "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\TaskScheduler\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "ArduinoJson.h",
     "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\ArduinoJson\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "AsyncTCP.h",
     "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\AsyncTCP\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "WiFi.h",
     "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "SPIFFS.h",
     "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\SPIFFS\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "FS.h",
     "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "Update.h",
     "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
-    "Include": "",
-    "Includepath": null
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
+    "Include": "WiFiCredsHome.h",
+    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\WifiCredsHome"
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire\\OneWire.cpp",
-    "Include": "",
-    "Includepath": null
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
+    "Include": "WebServer.h",
+    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WebServer\\src"
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\DallasTemperature\\DallasTemperature.cpp",
+    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_root.ino.cpp",
     "Include": "",
     "Includepath": null
   },
@@ -166,6 +156,21 @@
   },
   {
     "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src\\Updater.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WebServer\\src\\Parsing.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WebServer\\src\\WebServer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WebServer\\src\\detail\\mimetable.cpp",
     "Include": "",
     "Includepath": null
   }

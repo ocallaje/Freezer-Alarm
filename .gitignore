@@ -2,6 +2,7 @@
 *.d
 *.env
 WiFiCredentials.h
+WiFiCredsHome.h
 # Object files
 *.o
 *.ko

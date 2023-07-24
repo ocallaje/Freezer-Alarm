@@ -1,99 +1,103 @@
-# 1 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
-//************************************************************
-// This device uses a mesh to communicate freezer sensor data 
-// to a central node. Up to 4 DS18B20 probes can be connected. 
-// Device will monitor sensor status and send all data to root
-// node with a JSON document.
-//************************************************************
-# 8 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino" 2
-# 9 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino" 2
-# 10 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino" 2
+# 1 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+# 2 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+# 3 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+# 4 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+# 5 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+# 6 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+# 7 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+# 8 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino" 2
+
+
+// Mesh Parameters
 
 
 
-
-
-Scheduler userScheduler; // to control your personal task
 painlessMesh mesh;
+Scheduler userScheduler; // to control your personal task
 
-// Temp Sensors
+// Network parameters
 
-OneWire oneWire(2 /* Data wire is plugged into digital pin 2 on the Arduino*/); // Setup a oneWire instance to 
-DallasTemperature sensors(&oneWire); // Pass oneWire reference to DallasTemperature library
 
-// Temp sensor vars
-const int numSensors = 4;
-int deviceCount = 0;
-float tempC;
-float tempSensors[numSensors] = {0,0,0,0};
-int connectedSensor[numSensors] = {0,0,0,0};
 
-// Prototype
+WebServer server(80);
+IPAddress myIP(0,0,0,0);
+IPAddress myAPIP(0,0,0,0);
+
+// Initialise vars
 void receivedCallback( uint32_t from, String &msg );
-size_t logServerId = 0; // init server id
+StaticJsonDocument<1024> SensorHub;
+int nidx;
+const int arraySize = 3;
+String dataArray[arraySize] = {"a", "b", "c"};
+String idtable[arraySize] = {"0","0","0"};
 
-// Send message to the logServer every 10 seconds 
-Task myLoggingTask(10000, (-1), []() {
+//***
+// Begin Tasks
+
+// Send my ID every 60 seconds to inform others
+Task logServerTask(60000, (-1), []() {
   DynamicJsonDocument jsonBuffer(1024);
-  JsonArray sensorArray = jsonBuffer.createNestedArray("sensorArray");
-  for (int i = 0; i < numSensors; i++){
-    JsonObject msg = sensorArray.createNestedObject();
-    msg["index"] = i;
-    msg["FreezerID"] = "F"+String(i+1);
-    msg["Connected"] = connectedSensor[i];
-    //Serial.println(mesh.getNodeId());
-    msg["value"] = tempSensors[i];
-    msg["unit"] = "C";
-  }
-  JsonArray infoArray = jsonBuffer.createNestedArray("nodeID");
-  //JsonObject nodeInfo = infoArray.createNestedObject();
-  //nodeInfo["nodeId"] = String(mesh.getNodeId());
-  infoArray.add(String(mesh.getNodeId()));
-
-  JsonArray indexArray = jsonBuffer.createNestedArray("index");
-  indexArray.add("0");
-
+  JsonObject msg = jsonBuffer.to<JsonObject>();
+  msg["topic"] = "logServer";
+  msg["nodeId"] = mesh.getNodeId();
   String str;
-  serializeJson(jsonBuffer, str);
-  if (logServerId == 0) // If we don't know the logServer yet
-    mesh.sendBroadcast(str);
-  else
-    mesh.sendSingle(logServerId, str);
-  serializeJson(jsonBuffer, Serial); // Log to serial
-  Serial.printf("\n");
-  Serial.println("");
+  serializeJson(msg, str);
+  mesh.sendBroadcast(str);
 });
 
-// Task to read temp sensors
-Task readTemps(1000, (-1), []() {
-  sensors.requestTemperatures(); // Get all temps
-  for (int i = 0; i < numSensors; i++){
-    tempC = sensors.getTempCByIndex(i); // Temp of ith sensor
-    tempSensors[i] = tempC; // Store temp reading
-    //Serial.println(tempSensors[i]);
-    if (tempC != -127) {
-      connectedSensor[i] = 1; // Sensor is connected
-      } else {
-      connectedSensor[i] = 0; // Sensor is disconnected
-    }
+// Create JSON
+Task compileJSON(10000, (-1), []() {
+  Serial.println("Starting compile task");
+  SensorHub.clear(); // Clear JSON file
+  JsonArray SensorDevice = SensorHub.createNestedArray("FreezerDevices"); // Create array for Freezers
+  StaticJsonDocument<1024> objdoc; // Create temp JSON doc 
+  for (int i =0; i< arraySize; i++) { // for every freezer
+    deserializeJson(objdoc, dataArray[i]); // convert str array to json
+    JsonObject obj = SensorDevice.createNestedObject(); // Create nested freezer object
+    obj["index"] = objdoc["index"];
+    obj["FreezerID"] = objdoc["FreezerID"]; // build json object from temp
+    obj["Connected"] = objdoc["Connected"];
+    obj["value"] = objdoc["value"];
+    obj["unit"] = objdoc["unit"];
   }
+  // log to serial
+  serializeJson(SensorHub, Serial);
+  Serial.printf("\n");
 });
+
+//***
 
 void setup() {
   Serial.begin(115200);
-  sensors.begin(); // Start temp sensors
-  deviceCount = sensors.getDeviceCount(); // locate devices on the bus
 
-  // Start mesh
-  mesh.setDebugMsgTypes( ERROR | STARTUP | CONNECTION ); // set before init() to see start msgs
-  mesh.init( "LabIOTMesh", "sayyeshtothemesh", &userScheduler, 5555, WIFI_MODE_APSTA, 6 );
+  //mesh.setDebugMsgTypes( ERROR | MESH_STATUS | CONNECTION | SYNC | COMMUNICATION | GENERAL | MSG_TYPES | REMOTE | DEBUG ); // all types on
+  mesh.setDebugMsgTypes( ERROR | CONNECTION ); // set before init() so that you can see startup messages
+  mesh.init( "LabIOTMesh", "sayyeshtothemesh", &userScheduler, 5555, WIFI_MODE_APSTA, 6, 1 );
+  mesh.stationManual("SpringdaleSpringadome", "Springadome64"); // set AP info for mesh
   mesh.onReceive(&receivedCallback);
+  //Newly Connected Node
+  mesh.onNewConnection([](size_t nodeId) {
+    Serial.printf("New Connection %u\n", nodeId);
+    int nodes = mesh.getNodeList().size();
+    Serial.println("Total number of nodes");
+    Serial.println(nodes);
+  });
+  //Disconnected Node
+  mesh.onDroppedConnection([](size_t nodeId) {
+    Serial.printf("Dropped Connection %u\n", nodeId);
+    for (int i = 0; i < arraySize; i++) {
+      //Serial.println(idtable[i]);
+      if (idtable[i] == String(nodeId)) { // Find index matching node ID
+        dataArray[i].replace("\"Connected\":\"1\"", "\"Connected\":\"0\""); // set connection to 0
+      }
+    }
+  });
 
-  // Add the task to the your scheduler
-  userScheduler.addTask(myLoggingTask);
-  myLoggingTask.enable();
-  userScheduler.addTask(readTemps);
-  readTemps.enable();
+  // Add the tasks to the scheduler
+  userScheduler.addTask(logServerTask);
+  logServerTask.enable();
+  userScheduler.addTask(compileJSON);
+  compileJSON.enable();
 }
 
 void loop() {
@@ -101,23 +105,13 @@ void loop() {
 }
 
 void receivedCallback( uint32_t from, String &msg ) {
-  Serial.printf("logClient: Received from %u msg=%s\n", from, msg.c_str());
-
-  // Saving logServer id
-  DynamicJsonDocument jsonBuffer(1024 + msg.length());
-  DeserializationError error = deserializeJson(jsonBuffer, msg);
-  if (error) {
-    Serial.printf("DeserializationError\n");
-    return;
-  }
-
-  JsonObject root = jsonBuffer.as<JsonObject>();
-  if (root.containsKey("topic")) {
-      if (String("logServer").equals(root["topic"].as<String>())) {
-          // check for on: true or false
-          logServerId = root["nodeId"];
-          Serial.printf("logServer detected!!!\n");
-      }
-      Serial.printf("Handled from %u msg=%s\n", from, msg.c_str());
-  }
+  //Serial.printf("logServer: Received from %u msg=%s\n", from, msg.c_str());
+  const char* newdata = msg.c_str(); // get data from node
+  //Serial.println(newdata);
+  StaticJsonDocument<200> tempdoc; // create temp json doc
+  deserializeJson(tempdoc, newdata); // save node string to json doc
+  nidx = tempdoc["index"]; // get index from json key
+  dataArray[nidx] = newdata; // save string data to string array in correct index position
+  const char* nodename = tempdoc["nodeId"]; // get node id from json
+  idtable[nidx] = nodename; // save node name in idtable in correct index position
 }
