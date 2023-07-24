@@ -119,6 +119,14 @@ void read_sensor_data(void * parameter) {
   //Serial.println("C");
 }
 
+IPAddress getlocalIP() {
+  return IPAddress(mesh.getStationIP());
+}
+
+void api_setup() {
+  Serial.println("Initialising API...");
+  read_sensor_data(NULL);
+}
 //***
 
 void setup() {
