@@ -1,4 +1,4 @@
-#line 1 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 1 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 #include "painlessMesh.h"
 #include <WiFi.h>
 #include <LabCreds.h>
@@ -18,21 +18,23 @@ Scheduler     userScheduler; // to control your personal task
 // Network parameters
 #define   STATION_SSID     envSSID
 #define   STATION_PASSWORD envPASSWORD
-#define HOSTNAME "IOT_BRIDGE"
+#define HOSTNAME "HTTP_BRIDGE"
 WebServer server(80);
 IPAddress myIP(0,0,0,0);
 IPAddress myAPIP(0,0,0,0);
 
 // Initialise vars
 void receivedCallback( uint32_t from, String &msg );
-void sendMessage() ;      // Initialise function
-void api_setup();
 StaticJsonDocument<1024> SensorHub;
 int nidx;
 const int arraySize = 3;
 String dataArray[arraySize] = {"a", "b", "c"};
 String idtable[arraySize] = {"0","0","0"};
-IPAddress getlocalIP();
+
+//temporary
+int temperature = 0;
+String tempstr = "test";
+String C = "c";
 
 //***
 // Begin Tasks
@@ -57,41 +59,89 @@ Task compileJSON(10000, TASK_FOREVER, []() {
   for (int i =0; i< arraySize; i++) {                                     // for every freezer
     deserializeJson(objdoc, dataArray[i]);                                // convert str array to json
     JsonObject obj = SensorDevice.createNestedObject();                   // Create nested freezer object
-    obj["index"] = objdoc["index"];
-    obj["FreezerID"] = objdoc["FreezerID"];                               // build json object from temp
-    obj["Connected"] = objdoc["Connected"];
-    obj["value"] = objdoc["value"];
-    obj["unit"] = objdoc["unit"];
+    //obj["index"] = objdoc["index"];
+    //obj["FreezerID"] = objdoc["FreezerID"];                               // build json object from temp
+    //obj["Connected"] = objdoc["Connected"];
+    //obj["value"] = objdoc["value"];
+    //obj["unit"] = objdoc["unit"];
+    obj["sensorArray"] = objdoc["sensorArray"];
   }
   // log to serial
   serializeJson(SensorHub, Serial);
   Serial.printf("\n");
 });
 
-//***
-
+//*** End Tasks
 
 //***
 // Begin API Functions
 
 // Function to set up API routing
-#line 77 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 79 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void setup_routing();
-#line 85 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 86 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void create_json(char *tag, float value, char *unit);
-#line 92 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 93 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void add_json_object(char *tag, float value, char *unit);
-#line 99 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
-void getTemperature();
-#line 104 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 100 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void getData();
-#line 113 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 109 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void read_sensor_data(void * parameter);
-#line 132 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 118 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void api_setup();
+#line 125 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void setup();
-#line 102 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 161 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void loop();
-#line 69 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 178 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+IPAddress getlocalIP();
+#line 79 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void setup_routing() {              
+  server.on("/data", getData);                 
+  server.begin();    
+}
+// JSON data buffer
+StaticJsonDocument<250> jsonDocument;
+char buffer[250];
+void create_json(char *tag, float value, char *unit) {  
+  jsonDocument.clear();
+  jsonDocument["type"] = tag;
+  jsonDocument["value"] = value;
+  jsonDocument["unit"] = unit;
+  serializeJson(jsonDocument, buffer);  
+}
+void add_json_object(char *tag, float value, char *unit) {
+  JsonObject obj = jsonDocument.createNestedObject();
+  obj["type"] = tag;
+  obj["value"] = value;
+  obj["unit"] = unit; 
+}
+// API Implementation
+void getData() {
+  Serial.println("Get All Sensor Data");
+  jsonDocument.clear();
+  // add_json_object(tempstr, temperature, c);
+  serializeJson(jsonDocument, buffer);
+  server.send(200, "application/json", buffer);
+}
+
+// Get local sensor data
+void read_sensor_data(void * parameter) {
+  Serial.println("Reading sensor data...");
+  // Read Temp
+  //sensors.requestTemperatures();
+  //temperature = sensors.getTempCByIndex(0); //index corresponds to each sensor 0 = 1st sensor
+  //Serial.print(temperature);
+  //Serial.println("C");
+}
+
+void api_setup() {
+  Serial.println("Initialising API...");
+  read_sensor_data(NULL);
+}
+//*** End API
+
+
 void setup() {
   Serial.begin(115200);
     
@@ -99,9 +149,6 @@ void setup() {
   mesh.setDebugMsgTypes( ERROR | CONNECTION );  // set before init() so that you can see startup messages
   mesh.init( MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT, WIFI_AP_STA, 6, 1 );
   mesh.stationManual(STATION_SSID, STATION_PASSWORD);                 // set AP info for mesh
-  mesh.setHostname(HOSTNAME);
-  mesh.setRoot(true); 
-  mesh.setContainsRoot(true);
   mesh.onReceive(&receivedCallback);
   //Newly Connected Node
   mesh.onNewConnection([](size_t nodeId) {
@@ -128,11 +175,12 @@ void setup() {
   compileJSON.enable();
 
   // Begin API	 	 
-  setup_routing(); 
+  setup_routing();
 }
 
 void loop() {
   mesh.update();                              // Renew mesh and tasks
+  server.handleClient();	                    // Listen for API events
 }
 
 void receivedCallback( uint32_t from, String &msg ) {
@@ -143,6 +191,10 @@ void receivedCallback( uint32_t from, String &msg ) {
   deserializeJson(tempdoc, newdata);          // save node string to json doc
   nidx = tempdoc["index"];                    // get index from json key
   dataArray[nidx] = newdata;                  // save string data to string array in correct index position
-  const char* nodename = tempdoc["nodeId"];   // get node id from json
+  const char* nodename = tempdoc["nodeID"];   // get node id from json
   idtable[nidx] = nodename;                   // save node name in idtable in correct index position
+}
+
+IPAddress getlocalIP() {
+  return IPAddress(mesh.getStationIP());
 }

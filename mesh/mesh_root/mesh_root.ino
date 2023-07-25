@@ -30,6 +30,11 @@ const int arraySize = 3;
 String dataArray[arraySize] = {"a", "b", "c"};
 String idtable[arraySize] = {"0","0","0"};
 
+//temporary
+int temperature = 0;
+String tempstr = "test";
+String C = "c";
+
 //***
 // Begin Tasks
 
@@ -53,18 +58,69 @@ Task compileJSON(10000, TASK_FOREVER, []() {
   for (int i =0; i< arraySize; i++) {                                     // for every freezer
     deserializeJson(objdoc, dataArray[i]);                                // convert str array to json
     JsonObject obj = SensorDevice.createNestedObject();                   // Create nested freezer object
-    obj["index"] = objdoc["index"];
-    obj["FreezerID"] = objdoc["FreezerID"];                               // build json object from temp
-    obj["Connected"] = objdoc["Connected"];
-    obj["value"] = objdoc["value"];
-    obj["unit"] = objdoc["unit"];
+    //obj["index"] = objdoc["index"];
+    //obj["FreezerID"] = objdoc["FreezerID"];                               // build json object from temp
+    //obj["Connected"] = objdoc["Connected"];
+    //obj["value"] = objdoc["value"];
+    //obj["unit"] = objdoc["unit"];
+    obj["sensorArray"] = objdoc["sensorArray"];
   }
   // log to serial
   serializeJson(SensorHub, Serial);
   Serial.printf("\n");
 });
 
+//*** End Tasks
+
 //***
+// Begin API Functions
+
+// Function to set up API routing
+void setup_routing() {              
+  server.on("/data", getData);                 
+  server.begin();    
+}
+// JSON data buffer
+StaticJsonDocument<250> jsonDocument;
+char buffer[250];
+void create_json(char *tag, float value, char *unit) {  
+  jsonDocument.clear();
+  jsonDocument["type"] = tag;
+  jsonDocument["value"] = value;
+  jsonDocument["unit"] = unit;
+  serializeJson(jsonDocument, buffer);  
+}
+void add_json_object(char *tag, float value, char *unit) {
+  JsonObject obj = jsonDocument.createNestedObject();
+  obj["type"] = tag;
+  obj["value"] = value;
+  obj["unit"] = unit; 
+}
+// API Implementation
+void getData() {
+  Serial.println("Get All Sensor Data");
+  jsonDocument.clear();
+  // add_json_object(tempstr, temperature, c);
+  serializeJson(jsonDocument, buffer);
+  server.send(200, "application/json", buffer);
+}
+
+// Get local sensor data
+void read_sensor_data(void * parameter) {
+  Serial.println("Reading sensor data...");
+  // Read Temp
+  //sensors.requestTemperatures();
+  //temperature = sensors.getTempCByIndex(0); //index corresponds to each sensor 0 = 1st sensor
+  //Serial.print(temperature);
+  //Serial.println("C");
+}
+
+void api_setup() {
+  Serial.println("Initialising API...");
+  read_sensor_data(NULL);
+}
+//*** End API
+
 
 void setup() {
   Serial.begin(115200);
@@ -97,10 +153,14 @@ void setup() {
   logServerTask.enable();
   userScheduler.addTask(compileJSON);
   compileJSON.enable();
+
+  // Begin API	 	 
+  setup_routing();
 }
 
 void loop() {
   mesh.update();                              // Renew mesh and tasks
+  server.handleClient();	                    // Listen for API events
 }
 
 void receivedCallback( uint32_t from, String &msg ) {
@@ -111,6 +171,10 @@ void receivedCallback( uint32_t from, String &msg ) {
   deserializeJson(tempdoc, newdata);          // save node string to json doc
   nidx = tempdoc["index"];                    // get index from json key
   dataArray[nidx] = newdata;                  // save string data to string array in correct index position
-  const char* nodename = tempdoc["nodeId"];   // get node id from json
+  const char* nodename = tempdoc["nodeID"];   // get node id from json
   idtable[nidx] = nodename;                   // save node name in idtable in correct index position
+}
+
+IPAddress getlocalIP() {
+  return IPAddress(mesh.getStationIP());
 }
