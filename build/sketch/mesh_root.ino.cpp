@@ -18,18 +18,21 @@ Scheduler     userScheduler; // to control your personal task
 // Network parameters
 #define   STATION_SSID     envSSID
 #define   STATION_PASSWORD envPASSWORD
-#define HOSTNAME "HTTP_BRIDGE"
+#define HOSTNAME "IOT_BRIDGE"
 WebServer server(80);
 IPAddress myIP(0,0,0,0);
 IPAddress myAPIP(0,0,0,0);
 
 // Initialise vars
 void receivedCallback( uint32_t from, String &msg );
+void sendMessage() ;      // Initialise function
+void api_setup();
 StaticJsonDocument<1024> SensorHub;
 int nidx;
 const int arraySize = 3;
 String dataArray[arraySize] = {"a", "b", "c"};
 String idtable[arraySize] = {"0","0","0"};
+IPAddress getlocalIP();
 
 //***
 // Begin Tasks
@@ -67,11 +70,83 @@ Task compileJSON(10000, TASK_FOREVER, []() {
 
 //***
 
-#line 69 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+
+//***
+// Begin API Functions
+
+// Function to set up API routing
+#line 77 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void setup_routing();
+#line 85 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void create_json(char *tag, float value, char *unit);
+#line 92 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void add_json_object(char *tag, float value, char *unit);
+#line 99 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void getTemperature();
+#line 104 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void getData();
+#line 113 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void read_sensor_data(void * parameter);
+#line 132 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void setup();
-#line 102 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 171 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void loop();
-#line 69 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 77 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void setup_routing() {     
+  server.on("/temperature", getTemperature);          
+  server.on("/data", getData);                 
+  server.begin();    
+}
+// JSON data buffer
+StaticJsonDocument<250> jsonDocument;
+char buffer[250];
+void create_json(char *tag, float value, char *unit) {  
+  jsonDocument.clear();
+  jsonDocument["type"] = tag;
+  jsonDocument["value"] = value;
+  jsonDocument["unit"] = unit;
+  serializeJson(jsonDocument, buffer);  
+}
+void add_json_object(char *tag, float value, char *unit) {
+  JsonObject obj = jsonDocument.createNestedObject();
+  obj["type"] = tag;
+  obj["value"] = value;
+  obj["unit"] = unit; 
+}
+// API Implementation
+void getTemperature() {
+  Serial.println("Get temperature");
+  create_json(tempstr, temperature, c);
+  server.send(200, "application/json", buffer);
+}
+void getData() {
+  Serial.println("Get All Sensor Data");
+  jsonDocument.clear();
+  add_json_object(tempstr, temperature, c);
+  serializeJson(jsonDocument, buffer);
+  server.send(200, "application/json", buffer);
+}
+
+// Get local sensor data
+void read_sensor_data(void * parameter) {
+  Serial.println("Reading sensor data...");
+  // Read Temp
+  sensors.requestTemperatures();
+  temperature = sensors.getTempCByIndex(0); //index corresponds to each sensor 0 = 1st sensor
+  //Serial.print(temperature);
+  //Serial.println("C");
+}
+
+IPAddress getlocalIP() {
+  return IPAddress(mesh.getStationIP());
+}
+
+void api_setup() {
+  Serial.println("Initialising API...");
+  read_sensor_data(NULL);
+}
+//***
+
 void setup() {
   Serial.begin(115200);
     
@@ -79,6 +154,9 @@ void setup() {
   mesh.setDebugMsgTypes( ERROR | CONNECTION );  // set before init() so that you can see startup messages
   mesh.init( MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT, WIFI_AP_STA, 6, 1 );
   mesh.stationManual(STATION_SSID, STATION_PASSWORD);                 // set AP info for mesh
+  mesh.setHostname(HOSTNAME);
+  mesh.setRoot(true); 
+  mesh.setContainsRoot(true);
   mesh.onReceive(&receivedCallback);
   //Newly Connected Node
   mesh.onNewConnection([](size_t nodeId) {
@@ -103,6 +181,9 @@ void setup() {
   logServerTask.enable();
   userScheduler.addTask(compileJSON);
   compileJSON.enable();
+
+  // Begin API	 	 
+  setup_routing(); 
 }
 
 void loop() {
