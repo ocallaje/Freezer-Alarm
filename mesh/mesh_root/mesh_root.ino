@@ -1,6 +1,6 @@
 #include "painlessMesh.h"
 #include <WiFi.h>
-#include <WiFiCredsHome.h>
+#include <LabCreds.h>
 #include <Arduino.h>
 #include <WebServer.h>
 #include "IPAddress.h"

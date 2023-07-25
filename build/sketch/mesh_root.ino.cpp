@@ -1,7 +1,7 @@
 #line 1 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 #include "painlessMesh.h"
 #include <WiFi.h>
-#include <WiFiCredsHome.h>
+#include <LabCreds.h>
 #include <Arduino.h>
 #include <WebServer.h>
 #include "IPAddress.h"
@@ -67,6 +67,11 @@ Task compileJSON(10000, TASK_FOREVER, []() {
 
 //***
 
+#line 69 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void setup();
+#line 102 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+void loop();
+#line 69 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void setup() {
   Serial.begin(115200);
     
