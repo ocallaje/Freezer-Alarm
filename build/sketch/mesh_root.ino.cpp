@@ -1,7 +1,7 @@
-#line 1 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 1 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 #include "painlessMesh.h"
 #include <WiFi.h>
-#include "WiFiCredsHome.h"
+#include <LabCreds.h>
 #include <Arduino.h>
 #include <WebServer.h>
 #include "IPAddress.h"
@@ -89,64 +89,9 @@ void getData();
 void read_sensor_data(void * parameter);
 #line 132 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void setup();
-#line 171 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
+#line 102 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void loop();
-#line 77 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
-void setup_routing() {     
-  server.on("/temperature", getTemperature);          
-  server.on("/data", getData);                 
-  server.begin();    
-}
-// JSON data buffer
-StaticJsonDocument<250> jsonDocument;
-char buffer[250];
-void create_json(char *tag, float value, char *unit) {  
-  jsonDocument.clear();
-  jsonDocument["type"] = tag;
-  jsonDocument["value"] = value;
-  jsonDocument["unit"] = unit;
-  serializeJson(jsonDocument, buffer);  
-}
-void add_json_object(char *tag, float value, char *unit) {
-  JsonObject obj = jsonDocument.createNestedObject();
-  obj["type"] = tag;
-  obj["value"] = value;
-  obj["unit"] = unit; 
-}
-// API Implementation
-void getTemperature() {
-  Serial.println("Get temperature");
-  create_json(tempstr, temperature, c);
-  server.send(200, "application/json", buffer);
-}
-void getData() {
-  Serial.println("Get All Sensor Data");
-  jsonDocument.clear();
-  add_json_object(tempstr, temperature, c);
-  serializeJson(jsonDocument, buffer);
-  server.send(200, "application/json", buffer);
-}
-
-// Get local sensor data
-void read_sensor_data(void * parameter) {
-  Serial.println("Reading sensor data...");
-  // Read Temp
-  sensors.requestTemperatures();
-  temperature = sensors.getTempCByIndex(0); //index corresponds to each sensor 0 = 1st sensor
-  //Serial.print(temperature);
-  //Serial.println("C");
-}
-
-IPAddress getlocalIP() {
-  return IPAddress(mesh.getStationIP());
-}
-
-void api_setup() {
-  Serial.println("Initialising API...");
-  read_sensor_data(NULL);
-}
-//***
-
+#line 69 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_root\\mesh_root.ino"
 void setup() {
   Serial.begin(115200);
     
