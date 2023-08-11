@@ -1,5 +1,5 @@
 #include "painlessMesh.h"
-#include <WiFi.h>
+//#include <WiFi.h>
 #include <LabCreds.h>
 #include <Arduino.h>
 #include <WebServer.h>
@@ -15,8 +15,8 @@ painlessMesh  mesh;
 Scheduler     userScheduler; // to control your personal task
 
 // Network parameters
-#define   STATION_SSID     envSSID
-#define   STATION_PASSWORD envPASSWORD
+#define STATION_SSID "CampbellIOT"    //envSSID
+#define STATION_PASSWORD "Claudin5"   //envPASSWORD
 #define HOSTNAME "HTTP_BRIDGE"
 WebServer server(80);
 IPAddress myIP(0,0,0,0);
@@ -29,11 +29,13 @@ int nidx;
 const int arraySize = 3;
 String dataArray[arraySize] = {"a", "b", "c"};
 String idtable[arraySize] = {"0","0","0"};
+SimpleList<uint32_t> nodes;
 
 //temporary
 int temperature = 0;
 String tempstr = "test";
 String C = "c";
+
 
 //***
 // Begin Tasks
@@ -47,6 +49,8 @@ Task logServerTask(60000, TASK_FOREVER, []() {
   String str;
   serializeJson(msg, str);
   mesh.sendBroadcast(str);
+  nodes = mesh.getNodeList();
+  Serial.printf("Num nodes: %d\n", nodes.size());
 });
 
 // Create JSON
@@ -68,6 +72,8 @@ Task compileJSON(10000, TASK_FOREVER, []() {
   // log to serial
   serializeJson(SensorHub, Serial);
   Serial.printf("\n");
+
+  // clear data array
 });
 
 //*** End Tasks
@@ -77,32 +83,22 @@ Task compileJSON(10000, TASK_FOREVER, []() {
 
 // Function to set up API routing
 void setup_routing() {              
-  server.on("/data", getData);                 
+  server.on("/data", getData);  
+  server.on("/test", getTest);               
   server.begin();    
 }
 // JSON data buffer
-StaticJsonDocument<250> jsonDocument;
-char buffer[250];
-void create_json(char *tag, float value, char *unit) {  
-  jsonDocument.clear();
-  jsonDocument["type"] = tag;
-  jsonDocument["value"] = value;
-  jsonDocument["unit"] = unit;
-  serializeJson(jsonDocument, buffer);  
-}
-void add_json_object(char *tag, float value, char *unit) {
-  JsonObject obj = jsonDocument.createNestedObject();
-  obj["type"] = tag;
-  obj["value"] = value;
-  obj["unit"] = unit; 
-}
+StaticJsonDocument<1024> jsonDocument;
+char buffer[1024];
 // API Implementation
 void getData() {
   Serial.println("Get All Sensor Data");
-  jsonDocument.clear();
-  // add_json_object(tempstr, temperature, c);
-  serializeJson(jsonDocument, buffer);
+  serializeJson(SensorHub, buffer);
   server.send(200, "application/json", buffer);
+}
+void getTest() {
+  Serial.println("Get Test");
+  server.send(200, "application/json", "{test: 55}");
 }
 
 // Get local sensor data
@@ -129,6 +125,8 @@ void setup() {
   mesh.setDebugMsgTypes( ERROR | CONNECTION );  // set before init() so that you can see startup messages
   mesh.init( MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT, WIFI_AP_STA, 6, 1 );
   mesh.stationManual(STATION_SSID, STATION_PASSWORD);                 // set AP info for mesh
+  mesh.setRoot(true);
+  mesh.setContainsRoot(true);
   mesh.onReceive(&receivedCallback);
   //Newly Connected Node
   mesh.onNewConnection([](size_t nodeId) {
@@ -156,6 +154,7 @@ void setup() {
 
   // Begin API	 	 
   setup_routing();
+  
 }
 
 void loop() {
@@ -167,10 +166,13 @@ void receivedCallback( uint32_t from, String &msg ) {
   //Serial.printf("logServer: Received from %u msg=%s\n", from, msg.c_str());
   const char* newdata = msg.c_str();          // get data from node
   //Serial.println(newdata);
-  StaticJsonDocument<200> tempdoc;            // create temp json doc
+  StaticJsonDocument<1024> tempdoc;            // create temp json doc
   deserializeJson(tempdoc, newdata);          // save node string to json doc
-  nidx = tempdoc["index"];                    // get index from json key
+  nidx = tempdoc["ctlindex"][0];                 // get index from json key
   dataArray[nidx] = newdata;                  // save string data to string array in correct index position
+  //Serial.println(dataArray[0]);
+  //Serial.println(dataArray[1]);
+  //Serial.println(dataArray[2]);
   const char* nodename = tempdoc["nodeID"];   // get node id from json
   idtable[nidx] = nodename;                   // save node name in idtable in correct index position
 }
