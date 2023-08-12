@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#line 1 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
+#line 1 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
 //************************************************************
 // This device uses a mesh to communicate freezer sensor data 
 // to a central node. Up to 4 DS18B20 probes can be connected. 
@@ -84,11 +84,6 @@ Task readTemps(10000, TASK_FOREVER, []() {
   }
 });
 
-#line 85 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
-void setup();
-#line 105 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
-void loop();
-#line 85 "D:\\Projects\\Github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
 void setup() {
   Serial.begin(115200);
  

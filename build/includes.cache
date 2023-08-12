@@ -2,170 +2,170 @@
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\cores\\esp32"
+    "Includepath": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\cores\\esp32"
   },
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\variants\\firebeetle32"
+    "Includepath": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\variants\\firebeetle32"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "OneWire.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire"
+    "Includepath": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\OneWire"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "DallasTemperature.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\DallasTemperature"
+    "Includepath": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\DallasTemperature"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "painlessMesh.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\painlessMesh\\src"
+    "Includepath": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\Painless_Mesh\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "TaskSchedulerDeclarations.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\TaskScheduler\\src"
+    "Includepath": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\TaskScheduler\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "ArduinoJson.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\ArduinoJson\\src"
+    "Includepath": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\ArduinoJson\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "AsyncTCP.h",
-    "Includepath": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\AsyncTCP\\src"
+    "Includepath": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\AsyncTCP\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "WiFi.h",
-    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src"
+    "Includepath": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "SPIFFS.h",
-    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\SPIFFS\\src"
+    "Includepath": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\SPIFFS\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "FS.h",
-    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src"
+    "Includepath": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "Update.h",
-    "Includepath": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src"
+    "Includepath": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src"
   },
   {
-    "Sourcefile": "D:\\Projects\\Github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\build\\sketch\\mesh_logClient.ino.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\OneWire\\OneWire.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\OneWire\\OneWire.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\DallasTemperature\\DallasTemperature.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\DallasTemperature\\DallasTemperature.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\painlessMesh\\src\\painlessMeshSTA.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\Painless_Mesh\\src\\painlessMeshSTA.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\painlessMesh\\src\\scheduler.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\Painless_Mesh\\src\\scheduler.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\painlessMesh\\src\\wifi.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\Painless_Mesh\\src\\wifi.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\Documents\\Arduino\\libraries\\AsyncTCP\\src\\AsyncTCP.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\Documents\\Arduino\\libraries\\AsyncTCP\\src\\AsyncTCP.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\ETH.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\ETH.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFi.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFi.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiAP.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiAP.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiClient.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiClient.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiMulti.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiMulti.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiSTA.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiSTA.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiScan.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiScan.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiServer.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiServer.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiUdp.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\WiFi\\src\\WiFiUdp.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\SPIFFS\\src\\SPIFFS.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\SPIFFS\\src\\SPIFFS.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src\\FS.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src\\FS.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src\\vfs_api.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\FS\\src\\vfs_api.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src\\HttpsOTAUpdate.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src\\HttpsOTAUpdate.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Users\\Jeff\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src\\Updater.cpp",
+    "Sourcefile": "C:\\Users\\jeffr\\AppData\\Local\\Arduino15\\packages\\DFRobot\\hardware\\esp32\\0.2.1\\libraries\\Update\\src\\Updater.cpp",
     "Include": "",
     "Includepath": null
   }
