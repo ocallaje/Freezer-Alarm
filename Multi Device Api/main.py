@@ -34,5 +34,10 @@ for freezer_device in response.json()["FreezerDevices"]:
             
             # Print sensor information
             print(f"Sensor {index} - FreezerID: {freezer_id}, Connected: {connected}, Value: {value} {unit}")
+
+            #Check if sensor is connected
+            if connected == 1:
+                print(f"Connected value: {value}{unit}")
+                
     else:
         print("No sensor data available for this FreezerDevice")
