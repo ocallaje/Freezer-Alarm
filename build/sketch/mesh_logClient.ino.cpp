@@ -84,6 +84,11 @@ Task readTemps(10000, TASK_FOREVER, []() {
   }
 });
 
+#line 85 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
+void setup();
+#line 105 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
+void loop();
+#line 85 "C:\\Users\\jeffr\\Documents\\github\\Freezer-Alarm\\mesh\\mesh_logClient\\mesh_logClient.ino"
 void setup() {
   Serial.begin(115200);
  

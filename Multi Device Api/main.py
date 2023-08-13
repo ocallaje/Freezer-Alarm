@@ -6,6 +6,8 @@ import sched, time
 freezeThresh = -14     # Freezer temperature threshold
 subject = "Freezer Alert!"
 body = "Lab Freezer Alert! Temperature of freezer has exceeded " + str(freezeThresh) + "degrees! Please investigate"
+testmsg = 1
+#initialise alert variables
 
 #API to call freezer data
 def freezeAPI():
@@ -48,7 +50,11 @@ def parseJSON(response):
 
             #Check if sensor is connected
             if connected == 1:
-                print(f"Connected value: {value}{unit}")
+              print(f"Connected value: {value}{unit}")
+              if value > freezeThresh:
+                #store time in a varaible here and check if its been "time" since 
+                send.sendEmail("Freezer Temperature Alert!", body, send.allRecipients)
+                send.sendSMS(body, testmsg)
                 
     else:
         print("No sensor data available for this FreezerDevice")
