@@ -1,9 +1,12 @@
-from dotenv import load_dotenv
+'''
+Module to send alerts via email and SMS 
+'''
 import os
 import smtplib
 from email.mime.text import MIMEText
 import urllib.request
 import urllib.parse
+from dotenv import load_dotenv
 
 load_dotenv('config.env')
 # Email Settings
@@ -19,31 +22,33 @@ smsreceivers = os.getenv('phonenums')  # comma delimited character list of phone
 sms_api = os.getenv('sms_api')
 
 # Email function 
-def sendEmail(subject, body, recipients):
+def send_email(subject, body, recipients):
+    '''Function to send alerts via email'''
     msg = MIMEText(body)
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
     #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     try:
-      smtp_server = smtplib.SMTP(smtp_host, 587)
-      smtp_server.ehlo()
-      smtp_server.starttls()
-      smtp_server.ehlo()
-      smtp_server.login(smtp_user, password)
-      smtp_server.sendmail(sender, recipients, msg.as_string())
-      smtp_server.quit() 
+        smtp_server = smtplib.SMTP(smtp_host, 587)
+        smtp_server.ehlo()
+        smtp_server.starttls()
+        smtp_server.ehlo()
+        smtp_server.login(smtp_user, password)
+        smtp_server.sendmail(sender, recipients, msg.as_string())
+        smtp_server.quit() 
     except smtplib.SMTPServerDisconnected:
-      print("Server unexpectedly disconnected")
+        print("Server unexpectedly disconnected")
     except smtplib.SMTPException:
-      print("Failed to Send Email")
+        print("Failed to Send Email")
 
 # SMS function
-def sendSMS(message, testmsg):
+def send_sms(message, testmsg):
+    '''Function to send alerts via SMS'''
     data =  urllib.parse.urlencode({'apikey': sms_api, 'numbers': smsreceivers, 'test' : testmsg,
                                      'message' : message, 'sender': sender})
     data = data.encode('utf-8')
     request = urllib.request.Request("https://api.txtlocal.com/send/?")
-    f = urllib.request.urlopen(request, data)
-    fr = f.read()
-    return(fr)
+    req_response = urllib.request.urlopen(request, data)
+    req_message = req_response.read()
+    return req_message
